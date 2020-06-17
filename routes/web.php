@@ -13,6 +13,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Auth::routes();
+Route::get('/', 'SiteController@index');
+Route::get('ticket/status', 'TicketController@view')->name('view-ticket');
+Route::post('ticket/status', 'TicketController@show')->name('display-ticket');
+Route::resource('ticket', 'TicketController')->except('show');
+
+
+Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+Route::get('/agent/ticket/{ticket_id}', 'AgentTicketController@view')->name('ticket-detail');
+Route::put('/agent/ticket/{ticket_id}', 'AgentTicketController@response')->name('ticket-response');
